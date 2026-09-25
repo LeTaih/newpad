@@ -22,3 +22,12 @@ test("section content reveals when reached", async ({ page }) => {
   await answer.scrollIntoViewIfNeeded();
   await expect.poll(() => effectiveOpacity(answer)).toBeGreaterThan(0.99);
 });
+
+test("struck destination text stays readable against the background", async ({ page }) => {
+  await page.goto("/");
+  const firstDestination = page.locator("section#problem li").first();
+  await firstDestination.scrollIntoViewIfNeeded();
+  await page.waitForTimeout(1500);
+  const color = await firstDestination.locator("span").first().evaluate((el) => getComputedStyle(el).color);
+  expect(color).toBe("rgba(245, 245, 247, 0.4)");
+});

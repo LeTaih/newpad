@@ -25,7 +25,7 @@ export function Problem() {
                 idle: { backgroundSize: "0% 0.07em", color: "rgba(245, 245, 247, 1)" },
                 struck: {
                   backgroundSize: "100% 0.07em",
-                  color: "rgba(245, 245, 247, 0.3)",
+                  color: "rgba(245, 245, 247, 0.4)",
                   transition: reduceMotion
                     ? { duration: 0, delay: 0 }
                     : {

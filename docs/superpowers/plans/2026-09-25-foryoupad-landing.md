@@ -12,7 +12,7 @@
 
 ## Global Constraints
 
-- All user-facing text is English. All copy comes from `src/content/site.ts`; components never hard-code copy.
+- All user-facing text is English. Section copy (headings, body text, CTA labels, FAQ, footer lines) comes from `src/content/site.ts`; components may only hard-code UI micro-labels (`Soon`, `Coming soon` tooltip, `Live`, `Mint`, `Bonding curve`, sr-only `Feature`, the coin-card monogram `Y`).
 - Competitors are never named on the site; the comparison column is `Other launchpads`.
 - No invented statistics anywhere on the page.
 - Every “Launch a coin” CTA is a `<button type="button" aria-disabled="true">` with a `Soon` badge — never a link.
@@ -1725,12 +1725,17 @@ gh repo view LeTaih/newpad --json visibility --jq .visibility
 
 Expected: `PUBLIC`. If the command fails, stop Task 9 and record the error in the final report instead of retrying other approaches.
 
-- [ ] **Step 5: Enable Pages (Actions source) and push**
+- [ ] **Step 5: Publish `main`, enable Pages (Actions source), run the deploy**
+
+Work happens on branch `feat/landing`; `main` is fast-forwarded to it (authorised by the user). The remote is empty, so push before enabling Pages, then trigger the workflow explicitly (the push-triggered run may fail before Pages exists — that is expected).
 
 ```bash
+git push -u origin feat/landing
+git checkout main && git merge --ff-only feat/landing && git push -u origin main && git checkout feat/landing
 gh api -X POST repos/LeTaih/newpad/pages -f build_type=workflow
-git push -u origin main
-gh run watch --exit-status $(gh run list --workflow deploy.yml --limit 1 --json databaseId --jq '.[0].databaseId')
+gh workflow run deploy.yml --ref main
+sleep 10
+gh run watch --exit-status $(gh run list --workflow deploy.yml --event workflow_dispatch --limit 1 --json databaseId --jq '.[0].databaseId')
 ```
 
 Expected: the run finishes with both `build` and `deploy` jobs green.
@@ -1751,7 +1756,7 @@ Expected: `200`; `<title>ForYouPad — Creator fees. For you.`; `200`; `200 imag
 
 ### Task 10: Overnight hardening pass and morning report
 
-Runs after Tasks 1–9 with no user available. Every fix gets its own commit and is pushed (deploy re-runs automatically). Record every decision taken alone in the report. Never weaken a test to make it pass.
+Runs after Tasks 1–9 with no user available. Every fix gets its own commit on `feat/landing`; to publish, fast-forward `main` (`git checkout main && git merge --ff-only feat/landing && git push && git checkout feat/landing`) — the deploy re-runs automatically. Record every decision taken alone in the report. Never weaken a test to make it pass.
 
 **Files:**
 - Modify: any file under `src/`, `tests/`, `scripts/`, `.github/` as findings require

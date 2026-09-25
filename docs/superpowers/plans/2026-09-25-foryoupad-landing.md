@@ -1716,7 +1716,14 @@ git add .github/workflows/deploy.yml
 git commit -m "ci: deploy static export to GitHub Pages"
 ```
 
-- [ ] **Step 4: Ask the user before publishing.** The repo `LeTaih/newpad` is currently **private**; GitHub Pages on a private repo requires a paid GitHub plan. Ask whether to (a) make the repo public, or (b) keep it private (paid plan). Do not change visibility or push without an explicit answer.
+- [ ] **Step 4: Make the repo public** (explicitly authorised by the user on 2026-09-25 for this overnight run)
+
+```bash
+gh repo edit LeTaih/newpad --visibility public --accept-visibility-change-consequences
+gh repo view LeTaih/newpad --json visibility --jq .visibility
+```
+
+Expected: `PUBLIC`. If the command fails, stop Task 9 and record the error in the final report instead of retrying other approaches.
 
 - [ ] **Step 5: Enable Pages (Actions source) and push**
 
@@ -1739,3 +1746,62 @@ curl -s -o /dev/null -w "%{http_code} %{content_type}\n" https://letaih.github.i
 ```
 
 Expected: `200`; `<title>ForYouPad — Creator fees. For you.`; `200`; `200 image/png`.
+
+---
+
+### Task 10: Overnight hardening pass and morning report
+
+Runs after Tasks 1–9 with no user available. Every fix gets its own commit and is pushed (deploy re-runs automatically). Record every decision taken alone in the report. Never weaken a test to make it pass.
+
+**Files:**
+- Modify: any file under `src/`, `tests/`, `scripts/`, `.github/` as findings require
+- Create: `tests/e2e/a11y.spec.ts`, `docs/rapport/screens/*.png`, `docs/RAPPORT.md`
+
+- [ ] **Step 1: Critical re-review, section by section.** Serve `out/` and capture each section (Nav, Hero, Problem, Compare, How it works, Details, $FYP, FAQ, Footer) at widths 320, 375, 768, 1024, 1440 and at 812×375 (phone landscape), scrolling each into view and waiting 1.5 s so reveals finish. Save to `docs/rapport/screens/<section>-<width>.png`. For each section, write down in a working list: hierarchy, spacing rhythm, alignment, type sizes and line breaks, copy quality, glass readability, whether it feels Apple-grade. Fix every issue found; re-capture after fixing.
+
+- [ ] **Step 2: Responsive down to 320 px.** Extend the mobile overflow test in `tests/e2e/page.spec.ts` with a `320` project or a `test.use({ viewport: { width: 320, height: 640 } })` block running the same overflow assertion, plus landscape `812×375` (hero must not hide its CTAs behind the fixed nav). Make them pass.
+
+- [ ] **Step 3: Accessibility.** `npm install -D @axe-core/playwright`; create `tests/e2e/a11y.spec.ts`:
+
+```ts
+import { test, expect } from "@playwright/test";
+import AxeBuilder from "@axe-core/playwright";
+
+test("no axe violations", async ({ page }) => {
+  await page.goto("/");
+  for (const heading of await page.getByRole("heading").all()) await heading.scrollIntoViewIfNeeded();
+  await page.waitForTimeout(1500);
+  const results = await new AxeBuilder({ page }).analyze();
+  expect(results.violations.map((v) => `${v.id}: ${v.nodes.length}`)).toEqual([]);
+});
+```
+
+Also check by hand: Tab order goes nav → hero CTAs → FAQ summaries, every focus is visible, contrast of `text-muted` and `text-subtle` on the glass cards is ≥ 4.5:1 for body text.
+
+- [ ] **Step 4: Performance.** Run Lighthouse on the served export for mobile and desktop:
+
+```bash
+npx serve out -l 4173 -n &
+npx lighthouse http://localhost:4173 --quiet --chrome-flags="--headless" --output=json --output-path=/tmp/lh-mobile.json
+npx lighthouse http://localhost:4173 --quiet --preset=desktop --chrome-flags="--headless" --output=json --output-path=/tmp/lh-desktop.json
+kill %1
+node -e 'for (const f of ["/tmp/lh-mobile.json","/tmp/lh-desktop.json"]) { const r=require(f); console.log(f, Object.fromEntries(Object.entries(r.categories).map(([k,v])=>[k,Math.round(v.score*100)]))) }'
+```
+
+Target ≥ 95 in every category. Investigate anything below: LCP (hero reveal delay, font loading), CLS, JS bundle size (`ls -la out/_next/static/chunks`), unused CSS, `blur()` cost of ambient glows on mobile. Record before/after scores for the report.
+
+- [ ] **Step 5: Security review.** Invoke the `security-review` skill on the branch, then check specifically: `npm audit --omit=dev` (fix or justify each finding); GitHub workflow permissions are minimal and actions come from `actions/*` only; no secrets or tokens anywhere in the repo or git history (`git log -p | grep -iE "key|secret|token"`); every outbound request the page makes (Playwright `page.on("request")`) — expected: same origin only; a Content-Security-Policy `<meta>` tag compatible with the static export (document why if it cannot be strict); any `target="_blank"` link has `rel="noopener noreferrer"`.
+
+- [ ] **Step 6: Independent code review.** Dispatch a fresh reviewer (superpowers:requesting-code-review) over the whole diff since commit `2ca1c2d`; fix every confirmed finding.
+
+- [ ] **Step 7: Final verification.** `npm run lint && npm run typecheck && npx playwright test` all green; push; wait for the deploy run; re-run the Task 9 Step 6 live checks.
+
+- [ ] **Step 8: Morning report** — `docs/RAPPORT.md`, **in French**, for a non-technical reader:
+  - Lien du site en ligne + état (en ligne / problème).
+  - Ce qui a été construit, section par section, avec les captures desktop et mobile (liens vers `docs/rapport/screens/`).
+  - Scores Lighthouse avant/après.
+  - Résultats accessibilité et sécurité (ce qui a été trouvé, corrigé, ou laissé et pourquoi).
+  - Décisions prises seul pendant la nuit (copy modifiée, choix visuels), pour validation.
+  - Questions en suspens et prochaines étapes (achat de foryoupad.fun, app complète : /launch, /board, /coin, /fees sur Railway + Postgres).
+
+Commit and push the report.

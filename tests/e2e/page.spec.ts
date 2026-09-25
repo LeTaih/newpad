@@ -13,6 +13,7 @@ test("deep link to #faq reveals the FAQ", async ({ page }) => {
   await page.goto("/#faq");
   const heading = page.locator("section#faq").getByRole("heading", { level: 2 });
   await expect(heading).toHaveText("Questions. Answered.");
+  await expect(heading).toBeInViewport();
   await expect.poll(() => effectiveOpacity(heading)).toBeGreaterThan(0.99);
 });
 
@@ -40,9 +41,10 @@ test.describe("reduced motion", () => {
 
   test("reduced motion still reveals everything", async ({ page }) => {
     await page.goto("/");
-    for (const heading of await page.getByRole("heading").all()) {
-      await heading.scrollIntoViewIfNeeded();
-      await expect.poll(() => effectiveOpacity(heading)).toBeGreaterThan(0.99);
+    for (const el of await page.locator("main :is(h1, h2, h3, p, th, td, summary)").all()) {
+      if (!(await el.isVisible())) continue;
+      await el.scrollIntoViewIfNeeded();
+      await expect.poll(() => effectiveOpacity(el)).toBeGreaterThan(0.99);
     }
   });
 });

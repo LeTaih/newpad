@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { problem } from "@/content/site";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
@@ -8,6 +8,8 @@ import { Section } from "@/components/ui/Section";
 const ease = [0.22, 1, 0.36, 1] as const;
 
 export function Problem() {
+  // MotionConfig only neutralises transforms; the background sweep must be told to jump to its end state.
+  const reduceMotion = useReducedMotion();
   return (
     <Section id="problem" title={problem.title}>
       <motion.ul initial="idle" whileInView="struck" viewport={{ once: true, amount: 0.6 }} className="space-y-1 md:space-y-2">
@@ -24,10 +26,12 @@ export function Problem() {
                 struck: {
                   backgroundSize: "100% 0.07em",
                   color: "rgba(245, 245, 247, 0.3)",
-                  transition: {
-                    backgroundSize: { delay: 0.2 + i * 0.3, duration: 0.5, ease },
-                    color: { delay: 0.35 + i * 0.3, duration: 0.4 },
-                  },
+                  transition: reduceMotion
+                    ? { duration: 0, delay: 0 }
+                    : {
+                        backgroundSize: { delay: 0.2 + i * 0.3, duration: 0.5, ease },
+                        color: { delay: 0.35 + i * 0.3, duration: 0.4 },
+                      },
                 },
               }}
             >

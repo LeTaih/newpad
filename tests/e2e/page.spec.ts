@@ -47,6 +47,17 @@ test.describe("reduced motion", () => {
       await expect.poll(() => effectiveOpacity(el)).toBeGreaterThan(0.99);
     }
   });
+
+  test("reduced motion strikes the fee destinations without a sweep", async ({ page }) => {
+    await page.goto("/");
+    const list = page.locator("section#problem ul");
+    await list.scrollIntoViewIfNeeded();
+    for (const strike of await list.locator("li > span").all()) {
+      await expect
+        .poll(() => strike.evaluate((el) => getComputedStyle(el).backgroundSize), { timeout: 300 })
+        .toMatch(/^100% /);
+    }
+  });
 });
 
 async function overflowingElements(page: Page): Promise<string[]> {

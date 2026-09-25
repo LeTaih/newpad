@@ -7,9 +7,9 @@ export function Nav() {
       <nav aria-label="Main" className="glass mx-auto flex h-14 max-w-5xl items-center justify-between gap-3 rounded-full pr-2 pl-4 min-[360px]:pl-5">
         <a href="#top" className="text-[15px] font-semibold tracking-tight">
           {site.name.replace("Pad", "")}
-          <span className="text-muted">Pad</span>
+          <span className="text-fg/65">Pad</span>
         </a>
-        <ul className="hidden items-center gap-7 text-sm text-muted md:flex">
+        <ul className="hidden items-center gap-7 text-sm text-fg/65 md:flex">
           {navLinks.map((link) => (
             <li key={link.href}>
               <a href={link.href} className="transition-colors duration-200 hover:text-fg">

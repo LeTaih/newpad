@@ -10,7 +10,7 @@ export function Footer() {
         {footer.socials.map((name) => (
           <span key={name} className="inline-flex items-center gap-2">
             {name}
-            <Badge className="opacity-60">Soon</Badge>
+            <Badge>Soon</Badge>
           </span>
         ))}
         <span className="md:ml-auto">{footer.copyright}</span>

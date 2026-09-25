@@ -1,7 +1,7 @@
 # ForYouPad — Landing page (design)
 
 Date : 2026-09-25
-Statut : en revue
+Statut : validé
 
 ## Contexte
 
@@ -15,7 +15,7 @@ Positionnement : « The next generation of launchpads. »
 
 Le produit complet (hors de ce document) comprendra : `/launch` (création de token via le SDK officiel
 `@pump-fun/pump-sdk`, l'utilisateur signe et est créateur on-chain, mint vanity finissant par `fyp`), `/board`,
-`/coin/[mint]`, `/fees` (claim des creator fees). Il nécessitera un backend (Vercel + Supabase + Helius + Pinata)
+`/coin/[mint]`, `/fees` (claim des creator fees). Il nécessitera un backend (Railway + Postgres, RPC Helius, IPFS Pinata)
 et fera l'objet d'une spec séparée.
 
 ## Périmètre de ce document
@@ -26,8 +26,8 @@ Hors périmètre : wallet, on-chain, backend, board, formulaire de création, st
 
 ## Décisions
 
-- **Stack** : Next.js (App Router) + TypeScript + Tailwind CSS v4 + Motion (ex-Framer Motion), `output: "export"`.
-  Même base de code réutilisée plus tard pour l'app complète sur Vercel.
+- **Stack** : Next.js (App Router) + TypeScript + Tailwind CSS v4 + Motion (ex-Framer Motion), `output: "export"` activé uniquement pour la build GitHub Pages (variable d'environnement).
+  Même base de code réutilisée plus tard pour l'app complète, servie en Node sur Railway.
 - **Hébergement** : GitHub Pages via GitHub Actions (build + deploy à chaque push sur `main`). `basePath`
   configurable par variable d'environnement (sous-chemin `/<repo>` sur Pages, vide avec un domaine custom).
 - **Pré-lancement** : les CTA « Launch a coin » affichent un état *Coming soon* (pas de lien mort). Aucune

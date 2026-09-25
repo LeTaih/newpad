@@ -1,9 +1,9 @@
 import { test, expect } from "@playwright/test";
 
-test("compares other launchpads with ForYouPad row by row", async ({ page }) => {
+test("compares everyone else with ForYouPad row by row", async ({ page }) => {
   await page.goto("/");
   const table = page.locator("section#compare").getByRole("table");
-  await expect(table.getByRole("columnheader")).toHaveText(["Feature", "Other launchpads", "ForYouPad"]);
+  await expect(table.getByRole("columnheader")).toHaveText(["Feature", "Everyone else", "ForYouPad"]);
 
   const expected: [string, string, string][] = [
     ["On-chain creator", "Their treasury", "You"],

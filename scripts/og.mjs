@@ -19,7 +19,7 @@ const html = `<!doctype html>
   <div class="wrap">
     <div class="brand">ForYou<span>Pad</span></div>
     <h1>Creator fees.<br><span class="you">For you.</span></h1>
-    <div class="sub">The next generation of launchpads.</div>
+    <div class="sub">The next generation of token launches.</div>
   </div>
 </body></html>`;
 

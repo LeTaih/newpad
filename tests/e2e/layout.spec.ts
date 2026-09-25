@@ -5,7 +5,7 @@ test("document metadata carries the pitch", async ({ page }) => {
   await expect(page).toHaveTitle("ForYouPad — Creator fees. For you.");
   await expect(page.locator('meta[name="description"]')).toHaveAttribute(
     "content",
-    "The next generation of launchpads. Launch on pump.fun and keep 100% of your creator fees. No treasury. No middleman. No cut.",
+    "The next generation of token launches. Launch a token and point its creator fees at the one person who deserves them: you. No treasury. No middleman. No cut.",
   );
   await expect(page.locator('meta[name="theme-color"]')).toHaveAttribute("content", "#050608");
 });

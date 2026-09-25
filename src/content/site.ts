@@ -4,10 +4,10 @@ export const site = {
   mintSuffix: "fyp",
   tagline: "Creator fees. For you.",
   description:
-    "The next generation of launchpads. Launch on pump.fun and keep 100% of your creator fees. No treasury. No middleman. No cut.",
+    "The next generation of token launches. Launch a token and point its creator fees at the one person who deserves them: you. No treasury. No middleman. No cut.",
 } as const;
 
-export const launchCta = "Launch a coin";
+export const launchCta = "Launch a token";
 
 export const navLinks = [
   { label: "Compare", href: "#compare" },
@@ -17,12 +17,15 @@ export const navLinks = [
 ] as const;
 
 export const hero = {
-  eyebrow: "The next generation of launchpads.",
+  eyebrow: "The next generation of token launches.",
   titleLines: ["Creator fees.", "For you."],
-  subtitleLines: ["Launch on pump.fun and keep 100% of your creator fees.", "No treasury. No middleman. No cut."],
+  subtitleLines: [
+    "Launch a token and point its creator fees at the one person who deserves them: you.",
+    "No treasury. No middleman. No cut.",
+  ],
   secondaryCta: { label: "See how it works", href: "#how-it-works" },
   card: {
-    name: "Your Coin",
+    name: "Your Token",
     ticker: "$YOURS",
     mintPrefix: "7xKq…R",
     bondingPercent: 64,
@@ -43,7 +46,7 @@ export const problem = {
 export const compare = {
   eyebrow: "Compare",
   title: "The difference is you.",
-  columns: ["Other launchpads", "ForYouPad"],
+  columns: ["Everyone else", "ForYouPad"],
   rows: [
     { label: "On-chain creator", others: "Their treasury", us: "You" },
     { label: "Platform cut", others: "Up to 20%", us: "0%" },
@@ -57,9 +60,13 @@ export const steps = {
   eyebrow: "How it works",
   title: "Three steps. All yours.",
   items: [
-    { number: "01", title: "Connect.", body: "Any Solana wallet. We never see your keys." },
-    { number: "02", title: "Launch.", body: "Name, ticker, image. Your coin goes live on pump.fun, with you as its creator." },
-    { number: "03", title: "Earn.", body: "Every trade pays you. Claim whenever you want." },
+    {
+      number: "01",
+      title: "Launch.",
+      body: "Name, ticker, image, and the wallet that should get paid. It's yours. It's already filled in.",
+    },
+    { number: "02", title: "Fees accrue.", body: "Every trade on your token pays a creator fee. To you." },
+    { number: "03", title: "You get paid.", body: "100% of every claim goes to the creator. That's you." },
   ],
 } as const;
 
@@ -67,17 +74,17 @@ export const details = {
   eyebrow: "Details",
   title: "Everything else. Obviously.",
   items: [
-    { title: "Ends in fyp.", body: "Every coin launched here gets an address that ends in fyp.", wide: true, visual: "suffix" },
+    { title: "Ends in fyp.", body: "Every token launched here gets an address that ends in fyp.", wide: true, visual: "suffix" },
     { title: "Non-custodial.", body: "You sign every transaction. We never hold funds.", wide: false, visual: "lock" },
-    { title: "Zero platform fee.", body: "Only pump.fun's standard costs.", wide: false, visual: "zero" },
-    { title: "Built on pump.fun.", body: "Same curve, same liquidity, same terminals.", wide: true, visual: "curve" },
+    { title: "Zero platform fee.", body: "You pay the standard creation cost. We add nothing.", wide: false, visual: "zero" },
+    { title: "Same curve. Same traders.", body: "Your token trades exactly where it would have anyway.", wide: true, visual: "curve" },
   ],
 } as const;
 
 export const token = {
   eyebrow: "The platform token",
   title: "$FYP.",
-  body: "Our own token, launched on ForYouPad. Its creator fees go to its creators. Like every coin here.",
+  body: "Our own token, launched on ForYouPad. Its creator fees go to its creators. Like every token here.",
   badge: "Coming soon",
 } as const;
 
@@ -87,23 +94,23 @@ export const faq = {
   items: [
     {
       q: "Isn't this just how pump.fun already works?",
-      a: "Yes. That's the point. Every other launchpad added a detour. We removed it.",
+      a: "Yes. That's the point. Everyone else added a detour. We removed it.",
     },
     {
       q: "What's the catch?",
-      a: "There isn't one. We earn the same way you do: from the creator fees of our own coin, $FYP.",
+      a: "There isn't one. We earn the same way you do: from the creator fees of our own token, $FYP.",
     },
     {
       q: "Do you ever hold my funds?",
-      a: "Never. You sign every transaction from your own wallet. Your coin's creator is your address, not ours.",
+      a: "Never. You sign every transaction from your own wallet. Your token's creator is your address, not ours.",
     },
     {
       q: "How much does it cost?",
-      a: "Pump.fun's standard creation cost and network rent (around 0.02–0.04 SOL). ForYouPad adds nothing.",
+      a: "The standard creation cost and network rent (around 0.02–0.04 SOL). ForYouPad adds nothing.",
     },
     {
       q: "Why do addresses end in fyp?",
-      a: "So everyone knows where the coin came from. And where its fees go.",
+      a: "So everyone knows where the token came from. And where its fees go.",
     },
     {
       q: "Is this financial advice?",
@@ -120,6 +127,7 @@ export const notFound = {
 
 export const footer = {
   tagline: "Designed for you. Fees included.",
+  about: "Token creator fees, routed to the token's creator. Built on pump.fun and Solana.",
   risk: "Memecoins are extremely volatile and most go to zero. Nothing on this site is financial advice.",
   socials: ["X", "Telegram"],
   copyright: "© 2026 ForYouPad",

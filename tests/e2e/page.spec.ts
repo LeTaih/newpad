@@ -76,7 +76,7 @@ async function overflowingElements(page: Page): Promise<string[]> {
 async function navGap(page: Page): Promise<number> {
   const nav = page.getByRole("navigation", { name: "Main" });
   const logo = await nav.getByRole("link").first().boundingBox();
-  const cta = await nav.getByRole("button", { name: /Launch a coin/ }).boundingBox();
+  const cta = await nav.getByRole("button", { name: /Launch a token/ }).boundingBox();
   if (!logo || !cta) throw new Error("nav logo or CTA missing");
   return cta.x - (logo.x + logo.width);
 }
@@ -121,7 +121,7 @@ for (const viewport of [
       await page.goto("/");
       const navBox = await page.getByRole("navigation", { name: "Main" }).boundingBox();
       const hero = page.locator("section#top");
-      const ctas = [hero.getByRole("button", { name: /Launch a coin/ }), hero.getByRole("link", { name: "See how it works" })];
+      const ctas = [hero.getByRole("button", { name: /Launch a token/ }), hero.getByRole("link", { name: "See how it works" })];
       for (const cta of ctas) {
         await expect.poll(() => effectiveOpacity(cta)).toBeGreaterThan(0.99);
         await expect.poll(async () => (await cta.boundingBox())?.y ?? -1).toBeGreaterThanOrEqual(navBox!.y + navBox!.height);

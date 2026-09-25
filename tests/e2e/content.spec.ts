@@ -3,18 +3,18 @@ import { test, expect } from "@playwright/test";
 test("how it works lists the three steps in order", async ({ page }) => {
   await page.goto("/");
   const section = page.locator("section#how-it-works");
-  await expect(section.getByRole("heading", { level: 3 })).toHaveText(["Connect.", "Launch.", "Earn."]);
-  await expect(section.getByText("Every trade pays you. Claim whenever you want.")).toBeVisible();
+  await expect(section.getByRole("heading", { level: 3 })).toHaveText(["Launch.", "Fees accrue.", "You get paid."]);
+  await expect(section.getByText("Every trade on your token pays a creator fee. To you.")).toBeVisible();
 });
 
-test("details cover suffix, custody, fees and pump.fun", async ({ page }) => {
+test("details cover suffix, custody, fees and the curve", async ({ page }) => {
   await page.goto("/");
   const section = page.locator("section#details");
   await expect(section.getByRole("heading", { level: 3 })).toHaveText([
     "Ends in fyp.",
     "Non-custodial.",
     "Zero platform fee.",
-    "Built on pump.fun.",
+    "Same curve. Same traders.",
   ]);
 });
 

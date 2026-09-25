@@ -14,24 +14,25 @@ export function Problem() {
         {problem.destinations.map((destination, i) => (
           <li
             key={destination}
-            className="relative w-fit text-[clamp(1.75rem,6.5vw,4.5rem)] leading-tight font-semibold tracking-[-0.035em]"
+            className="text-[clamp(1.75rem,6.5vw,4.5rem)] leading-tight font-semibold tracking-[-0.035em] text-balance"
           >
+            {/* The strike is a background on the inline text, so it follows the words onto a second line. */}
             <motion.span
+              className="bg-linear-to-r from-accent to-accent bg-no-repeat [background-position:0_52%]"
               variants={{
-                idle: { opacity: 1 },
-                struck: { opacity: 0.3, transition: { delay: 0.35 + i * 0.3, duration: 0.4 } },
+                idle: { backgroundSize: "0% 0.07em", color: "rgba(245, 245, 247, 1)" },
+                struck: {
+                  backgroundSize: "100% 0.07em",
+                  color: "rgba(245, 245, 247, 0.3)",
+                  transition: {
+                    backgroundSize: { delay: 0.2 + i * 0.3, duration: 0.5, ease },
+                    color: { delay: 0.35 + i * 0.3, duration: 0.4 },
+                  },
+                },
               }}
             >
               {destination}
             </motion.span>
-            <motion.span
-              aria-hidden
-              className="absolute inset-x-0 top-1/2 h-[0.07em] origin-left -translate-y-1/2 rounded-full bg-accent"
-              variants={{
-                idle: { scaleX: 0 },
-                struck: { scaleX: 1, transition: { delay: 0.2 + i * 0.3, duration: 0.5, ease } },
-              }}
-            />
           </li>
         ))}
       </motion.ul>

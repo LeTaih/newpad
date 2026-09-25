@@ -3,8 +3,8 @@ import { ComingSoonButton } from "@/components/ui/Buttons";
 
 export function Nav() {
   return (
-    <header className="fixed inset-x-0 top-4 z-50 px-4">
-      <nav aria-label="Main" className="glass mx-auto flex h-14 max-w-5xl items-center justify-between rounded-full pr-2 pl-5">
+    <header className="fixed inset-x-0 top-3 z-50 px-3 min-[360px]:top-4 min-[360px]:px-4">
+      <nav aria-label="Main" className="glass mx-auto flex h-14 max-w-5xl items-center justify-between gap-3 rounded-full pr-2 pl-4 min-[360px]:pl-5">
         <a href="#top" className="text-[15px] font-semibold tracking-tight">
           {site.name.replace("Pad", "")}
           <span className="text-muted">Pad</span>
@@ -18,7 +18,7 @@ export function Nav() {
             </li>
           ))}
         </ul>
-        <ComingSoonButton className="h-10 px-4 text-sm">{launchCta}</ComingSoonButton>
+        <ComingSoonButton size="sm">{launchCta}</ComingSoonButton>
       </nav>
     </header>
   );

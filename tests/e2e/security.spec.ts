@@ -1,4 +1,12 @@
+import { readFileSync } from "node:fs";
 import { test, expect } from "@playwright/test";
+
+test("charset meta appears within the first 1024 bytes of out/index.html", () => {
+  const html = readFileSync("out/index.html", "utf8");
+  const charsetIndex = html.search(/<meta\s+charset="[^"]*"/i);
+  expect(charsetIndex).toBeGreaterThanOrEqual(0);
+  expect(charsetIndex).toBeLessThan(1024);
+});
 
 test("every request during a full scroll is same-origin", async ({ page, baseURL }) => {
   const origin = new URL(baseURL!).origin;

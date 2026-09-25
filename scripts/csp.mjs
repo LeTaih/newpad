@@ -18,6 +18,8 @@ import { join } from "node:path";
 const outDir = "out";
 const cspMetaRe = /<meta http-equiv="Content-Security-Policy"[^>]*>\s*/gi;
 const inlineScriptRe = /<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/g;
+// Matches React's SSR'd charset meta tag (camelCase `charSet`, self-closing).
+const charsetMetaRe = /<meta\s+charset="[^"]*"\s*\/?>/i;
 
 function fail(message) {
   console.error(`csp: ${message}`);
@@ -93,6 +95,13 @@ for (const file of files) {
   // so running this script twice never produces two <meta> tags.
   const html = original.replace(cspMetaRe, "");
 
+  // The charset meta must be the very first thing in <head> (browsers only
+  // honour it within the first 1024 bytes), so inject the CSP tag right
+  // after it rather than right after <head> — otherwise a long CSP value
+  // pushes <meta charset> past that limit.
+  const charsetMatch = html.match(charsetMetaRe);
+  if (!charsetMatch) fail(`${file}: no <meta charset> tag found, cannot inject CSP after it`);
+
   const bodies = inlineScriptBodies(html);
   const hashes = [...new Set(bodies.map(sha256))];
 
@@ -102,7 +111,7 @@ for (const file of files) {
 
   const csp = buildCsp(hashes);
   const tag = `<meta http-equiv="Content-Security-Policy" content="${csp}">`;
-  const injected = html.replace("<head>", `<head>${tag}`);
+  const injected = html.replace(charsetMetaRe, `${charsetMatch[0]}${tag}`);
 
   // Re-derive from the final, injected file: every inline script's hash must
   // actually be present in the policy we just wrote, and the count of

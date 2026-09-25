@@ -112,6 +112,12 @@ export const faq = {
   ],
 } as const;
 
+export const notFound = {
+  title: "Nothing here.",
+  body: "Your fees are still yours. This page just isn't one of ours.",
+  cta: "Back to ForYouPad",
+} as const;
+
 export const footer = {
   tagline: "Designed for you. Fees included.",
   risk: "Memecoins are extremely volatile and most go to zero. Nothing on this site is financial advice.",

@@ -1,5 +1,7 @@
 import { Compare } from "@/components/sections/Compare";
 import { Details } from "@/components/sections/Details";
+import { Faq } from "@/components/sections/Faq";
+import { Footer } from "@/components/sections/Footer";
 import { Hero } from "@/components/sections/Hero";
 import { HowItWorks } from "@/components/sections/HowItWorks";
 import { Nav } from "@/components/sections/Nav";
@@ -17,7 +19,9 @@ export default function Home() {
         <HowItWorks />
         <Details />
         <Token />
+        <Faq />
       </main>
+      <Footer />
     </>
   );
 }

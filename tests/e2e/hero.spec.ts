@@ -19,7 +19,7 @@ test("launch CTAs are disabled buttons, never links", async ({ page }) => {
   await expect(page.getByRole("link", { name: /Launch a coin/ })).toHaveCount(0);
 
   const urlBefore = page.url();
-  await ctas.first().click();
+  await ctas.first().click({ force: true });
   await ctas.first().press("Enter");
   expect(page.url()).toBe(urlBefore);
 });

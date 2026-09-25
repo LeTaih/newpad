@@ -1,5 +1,3 @@
-"use client";
-
 import type { AnchorHTMLAttributes, ReactNode } from "react";
 import { cn } from "@/lib/cn";
 import { Badge } from "./Badge";

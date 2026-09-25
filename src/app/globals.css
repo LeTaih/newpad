@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Phone in landscape: wide but very short. */
+@custom-variant short (@media (orientation: landscape) and (max-height: 32rem));
+
 @theme {
   --color-ink: #050608;
   --color-fg: #f5f5f7;

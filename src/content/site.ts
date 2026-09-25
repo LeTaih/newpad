@@ -19,7 +19,7 @@ export const navLinks = [
 export const hero = {
   eyebrow: "The next generation of launchpads.",
   titleLines: ["Creator fees.", "For you."],
-  subtitle: "Launch on pump.fun and keep 100% of your creator fees. No treasury. No middleman. No cut.",
+  subtitleLines: ["Launch on pump.fun and keep 100% of your creator fees.", "No treasury. No middleman. No cut."],
   secondaryCta: { label: "See how it works", href: "#how-it-works" },
   card: {
     name: "Your Coin",

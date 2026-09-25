@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "build:pages": "GITHUB_PAGES=true next build",
+    "build:pages": "GITHUB_PAGES=true next build && node scripts/csp.mjs",
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",

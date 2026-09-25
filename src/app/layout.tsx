@@ -31,9 +31,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
         <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-          <div className="absolute -top-48 left-1/2 h-[42rem] w-[42rem] -translate-x-1/2 rounded-full bg-accent/12 blur-[140px]" />
-          <div className="absolute top-1/3 -left-48 h-[32rem] w-[32rem] rounded-full bg-[#3b5bff]/12 blur-[140px]" />
-          <div className="absolute -right-48 bottom-0 h-[32rem] w-[32rem] rounded-full bg-[#9b5cff]/10 blur-[140px]" />
+          <div className="absolute -top-48 left-1/2 size-[min(42rem,140vw)] -translate-x-1/2 rounded-full bg-accent/12 blur-[140px]" />
+          <div className="absolute top-1/3 -left-48 size-[min(32rem,90vw)] rounded-full bg-[#3b5bff]/8 blur-[140px] md:bg-[#3b5bff]/12" />
+          <div className="absolute -right-48 bottom-0 size-[min(32rem,90vw)] rounded-full bg-[#9b5cff]/7 blur-[140px] md:bg-[#9b5cff]/10" />
         </div>
         <MotionProvider>{children}</MotionProvider>
       </body>

@@ -27,6 +27,8 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   overflow-x: clip;
+  /* Own stacking context: the -z-10 ambient glows paint above this background, not under it. */
+  isolation: isolate;
 }
 
 @layer components {

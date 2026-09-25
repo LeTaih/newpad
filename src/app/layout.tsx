@@ -30,6 +30,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
+        {/* Motion renders Reveal's initial state (opacity:0) as an inline style via SSR.
+            Without JS, nothing ever animates it to opacity:1, so force it visible. */}
+        <noscript>
+          <style>{"[data-reveal]{opacity:1!important;transform:none!important}"}</style>
+        </noscript>
         <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
           <div className="absolute -top-48 left-1/2 size-[min(42rem,140vw)] -translate-x-1/2 rounded-full bg-accent/12 blur-[140px]" />
           <div className="absolute top-1/3 -left-48 size-[min(32rem,90vw)] rounded-full bg-[#3b5bff]/8 blur-[140px] md:bg-[#3b5bff]/12" />

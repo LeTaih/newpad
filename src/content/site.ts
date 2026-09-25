@@ -67,10 +67,10 @@ export const details = {
   eyebrow: "Details",
   title: "Everything else. Obviously.",
   items: [
-    { title: "Ends in fyp.", body: "Every coin launched here gets an address that ends in fyp.", wide: true },
-    { title: "Non-custodial.", body: "You sign every transaction. We never hold funds.", wide: false },
-    { title: "Zero platform fee.", body: "Only pump.fun's standard costs.", wide: false },
-    { title: "Built on pump.fun.", body: "Same curve, same liquidity, same terminals.", wide: true },
+    { title: "Ends in fyp.", body: "Every coin launched here gets an address that ends in fyp.", wide: true, visual: "suffix" },
+    { title: "Non-custodial.", body: "You sign every transaction. We never hold funds.", wide: false, visual: "lock" },
+    { title: "Zero platform fee.", body: "Only pump.fun's standard costs.", wide: false, visual: "zero" },
+    { title: "Built on pump.fun.", body: "Same curve, same liquidity, same terminals.", wide: true, visual: "curve" },
   ],
 } as const;
 

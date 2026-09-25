@@ -19,14 +19,14 @@ export function CoinCard() {
         </div>
         <div>
           <p className="font-semibold tracking-tight">{card.name}</p>
-          <p className="text-sm text-muted">{card.ticker}</p>
+          <p className="text-sm text-fg/65">{card.ticker}</p>
         </div>
         <Badge className="ml-auto text-accent">Live</Badge>
       </div>
 
       <dl className="mt-6 space-y-3 text-sm">
         <div className="flex justify-between gap-4 border-b border-white/5 pb-3">
-          <dt className="text-muted">Mint</dt>
+          <dt className="text-fg/65">Mint</dt>
           <dd className="font-mono">
             {card.mintPrefix}
             <span className="text-accent">{site.mintSuffix}</span>
@@ -34,14 +34,14 @@ export function CoinCard() {
         </div>
         {card.rows.map((row) => (
           <div key={row.label} className="flex justify-between gap-4 border-b border-white/5 pb-3 last:border-0">
-            <dt className="text-muted">{row.label}</dt>
+            <dt className="text-fg/65">{row.label}</dt>
             <dd className="font-medium">{row.value}</dd>
           </div>
         ))}
       </dl>
 
       <div className="mt-5">
-        <div className="flex justify-between text-xs text-muted">
+        <div className="flex justify-between text-xs text-fg/65">
           <span>Bonding curve</span>
           <span className="font-mono">{card.bondingPercent}%</span>
         </div>
